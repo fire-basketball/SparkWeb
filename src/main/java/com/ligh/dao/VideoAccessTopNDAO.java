@@ -52,7 +52,7 @@ public class VideoAccessTopNDAO {
 
         try{
             connection = MysqlUtil.getConnection();
-            String sql = "select cms_id,times from day_video_access_topn_stat where day = ?";
+            String sql = "select cms_id,times from day_video_access_topn_stat where day = ? order by times desc limit 5";
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1,day);
             rs = pstmt.executeQuery();

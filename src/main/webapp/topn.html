@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <!-- 引入 ECharts 文件 -->
     <script src="js/echarts.min.js"></script>
+    <script src="js/jquery-1.8.3.js"></script>
 </head>
 <body>
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
@@ -15,8 +16,7 @@
             var myChart = echarts.init(document.getElementById('main'));
             var option = {
                 title : {
-                    text: '某站点用户访问来源',
-                    subtext: '纯属虚构',
+                    text: '主站最受欢迎的TopN课程',
                     x:'center'
                 },
                 tooltip : {
@@ -26,21 +26,29 @@
                 legend: {
                     orient: 'vertical',
                     left: 'left',
-                    data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                    data: []
                 },
                 series : [
                     {
-                        name: '访问来源',
+                        name: '访问次数',
                         type: 'pie',
                         radius : '55%',
                         center: ['50%', '60%'],
-                        data:[
-                            {value:335, name:'直接访问'},
-                            {value:310, name:'邮件营销'},
-                            {value:234, name:'联盟广告'},
-                            {value:135, name:'视频广告'},
-                            {value:1548, name:'搜索引擎'}
-                        ],
+                        data:(function () {
+                            var course = [];
+                            $.ajax({
+                                type:"GET",
+                                url:"/stat?day=20170511",
+                                dataType:'json',
+                                async:false,
+                                success:function (result) {
+                                    for (var i=0;i<result.length;i++){
+                                        course.push({"value":result[i].value,"name":result[i].name});
+                                    }
+                                }
+                            })
+                            return course;
+                        })(),
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
