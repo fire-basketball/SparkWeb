@@ -19,7 +19,7 @@ public class MysqlUtil {
 
     private static final String DRIVERCLASS = "com.mysql.jdbc.Driver";
 
-    private static final String URL = "jdbc:mysql://47.100.176.47:3306/imooc_project";
+    private static final String URL = "jdbc:mysql://ip:3306/imooc_project";
 
     /**
      *
